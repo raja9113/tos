@@ -1,14 +1,13 @@
 <?php
 include('db.php');
+include('includes/header.php');
 session_start();
 
-// Ensure only admin access
 if (!isset($_SESSION['admin_id'])) {
     header('Location: login.php');
     exit;
 }
 
-// Add Vendor
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_vendor'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
@@ -19,16 +18,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_vendor'])) {
     $query = "INSERT INTO vendors (name, description, email, phone, website) VALUES ('$name', '$description', '$email', '$phone', '$website')";
     mysqli_query($conn, $query);
 
-    echo "Vendor added successfully!";
+    echo "<div class='alert alert-success' role='alert'>Vendor added successfully!</div>";
 }
-
-// Form for adding vendors
 ?>
+<h2>Admin Panel</h2>
+<h3>Add Vendor</h3>
 <form method="POST">
-    <input type="text" name="name" placeholder="Vendor Name" required>
-    <textarea name="description" placeholder="Description" required></textarea>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="text" name="phone" placeholder="Phone" required>
-    <input type="text" name="website" placeholder="Website" required>
-    <button type="submit" name="add_vendor">Add Vendor</button>
+    <div class="form-group">
+        <label for="name">Vendor Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Vendor Name" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" placeholder="Description" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+    </div>
+    <div class="form-group">
+        <label for="website">Website</label>
+        <input type="text" class="form-control" id="website" name="website" placeholder="Website" required>
+    </div>
+    <button type="submit" name="add_vendor" class="btn btn-primary">Add Vendor</button>
 </form>
+<?php include('includes/footer.php'); ?>
