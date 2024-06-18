@@ -1,13 +1,21 @@
 <?php
 include('db.php');
-include('includes/header.php');
 session_start();
 
-if (!isset($_SESSION['admin_id'])) {
+// Ensure only admin access
+if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
 
+$query = "SELECT * FROM users WHERE id='{$_SESSION['user_id']}' AND is_admin=1";
+$result = mysqli_query($conn, $query);
+if (mysqli_num_rows($result) == 0) {
+    echo "Access denied!";
+    exit;
+}
+
+// Add Vendor
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_vendor'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
