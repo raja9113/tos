@@ -1,5 +1,6 @@
 <?php
 include('db.php');
+include('includes/header.php');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,12 +15,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user_id'] = $user['id'];
         header('Location: index.php');
     } else {
-        echo "Invalid credentials!";
+        echo "<div class='alert alert-danger' role='alert'>Invalid credentials!</div>";
     }
 }
 ?>
+<h2>Login</h2>
 <form method="POST">
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Login</button>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
+<?php include('includes/footer.php'); ?>
