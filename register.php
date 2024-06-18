@@ -1,5 +1,6 @@
 <?php
 include('db.php');
+include('includes/header.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
@@ -10,13 +11,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "INSERT INTO users (name, email, phone, password) VALUES ('$name', '$email', '$phone', '$password')";
     mysqli_query($conn, $query);
 
-    echo "Registration successful!";
+    echo "<div class='alert alert-success' role='alert'>Registration successful!</div>";
 }
 ?>
+<h2>Register</h2>
 <form method="POST">
-    <input type="text" name="name" placeholder="Name" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="text" name="phone" placeholder="Phone" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Register</button>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
 </form>
+<?php include('includes/footer.php'); ?>
