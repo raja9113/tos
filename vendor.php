@@ -1,15 +1,13 @@
 <?php
 include('db.php');
+include('includes/header.php');
 
-// Get vendor id from URL
 $vendor_id = $_GET['vendor_id'];
 
-// Fetch vendor details
 $vendor_query = "SELECT * FROM vendors WHERE id='$vendor_id'";
 $vendor_result = mysqli_query($conn, $vendor_query);
 $vendor = mysqli_fetch_assoc($vendor_result);
 
-// Fetch categories and items
 $categories_query = "SELECT * FROM categories WHERE vendor_id='$vendor_id'";
 $categories_result = mysqli_query($conn, $categories_query);
 
@@ -24,4 +22,6 @@ while ($category = mysqli_fetch_assoc($categories_result)) {
         echo "<p>{$item['name']} - {$item['price']}</p>";
     }
 }
+
+include('includes/footer.php');
 ?>
