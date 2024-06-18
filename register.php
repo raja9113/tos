@@ -3,15 +3,17 @@ include('db.php');
 include('includes/header.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
     $query = "INSERT INTO users (name, email, phone, password) VALUES ('$name', '$email', '$phone', '$password')";
-    mysqli_query($conn, $query);
-
-    echo "<div class='alert alert-success' role='alert'>Registration successful!</div>";
+    if (mysqli_query($conn, $query)) {
+        echo "<div class='alert alert-success' role='alert'>Registration successful!</div>";
+    } else {
+        echo "<div class='alert alert-danger' role='alert'>Error: " . mysqli_error($conn) . "</div>";
+    }
 }
 ?>
 <h2>Register</h2>
